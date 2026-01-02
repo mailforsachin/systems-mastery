@@ -21,9 +21,12 @@ nslookup
 - myjournal.omchat.ovh
 - Nginx / VPS
 
-## Questions for AI Architect
-1.
-2.
+## Questions for AI Architect/ Explanations for Systems Architect
+Data originates at the application layer and is progressively encapsulated as it moves down the network stack. At the sender’s NIC, the data becomes a Layer‑2 frame and is transmitted over the physical medium as electrical/optical/radio signals.
+
+Each router along the path strips the Layer‑2 frame, examines the Layer‑3 packet, and forwards it by re‑encapsulating it into a new Layer‑2 frame appropriate for the next hop.
+
+At the receiver, the process reverses: frames are decapsulated up the stack until the application receives the original data stream.
 
 ## Tomorrow's Focus
 [What's next?]
