@@ -1,0 +1,52 @@
+
+c
+
+
+
+
+
+
+
+
+reset
+stty sane
+```bash
+#!/bin/bash
+set -e
+
+DAY="$1"
+TOPIC="$2"
+QUESTION="$3"
+
+BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+DATE=$(date +%Y%m%d)
+
+# Clean topic for filename
+CLEAN_TOPIC=$(echo "$TOPIC" | tr ' ' '-' | tr -cd '[:alnum:]-_')
+
+OUT="$BASE_DIR/daily/${DATE}-day${DAY}-${CLEAN_TOPIC}.md"
+TEMPLATE="$BASE_DIR/templates/daily-note.md"
+
+# Prevent overwrite
+if [ -f "$OUT" ]; then
+  echo "⚠️  Note already exists:"
+  echo "   $OUT"
+  exit 0
+fi
+
+# Ensure template exists
+if [ ! -f "$TEMPLATE" ]; then
+  mkdir -p "$(dirname "$TEMPLATE")"
+  cat > "$TEMPLATE" <<'EOF'
+# Day {{day}}: {{topic}}
+## Date: {{date}}
+
+## Today's Question
+{{question}}
+
+## My Understanding
+[Explain in your own words]
+
+## Commands I Ran
+```bash
+# Actual commands here
