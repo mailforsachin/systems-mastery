@@ -4,7 +4,22 @@
 
 Create a concept **only if** you notice this thought:
 
-> “Ah… this keeps coming up.”
+>🚕 Taxi analogy (most reliable)
+
+Packet = passenger
+
+Frame = taxi
+
+At every hop:
+
+Passenger gets out
+
+Taxi is destroyed
+
+Passenger enters a new taxi
+
+The passenger never wraps the taxi.
+The taxi always wraps the passenger.
 
 ### Triggers
 - You’ve written about this 3–4 times
