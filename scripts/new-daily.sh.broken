@@ -19,7 +19,7 @@ SAFE_TOPIC="$(echo "$TOPIC" | tr ' ' '-' | tr -cd '[:alnum:]-' | sed 's/--*/-/g'
 
 # Create main file
 MAIN_FILE="$BASE_DIR/daily/${DATE}-day${DAY}-${SAFE_TOPIC}.md"
-cat > "$MAIN_FILE" << MAIN
+cat > "$MAIN_FILE" << EOM
 # Day ${DAY}: ${TOPIC}
 **Date:** ${DATE}
 
@@ -34,21 +34,14 @@ ${QUESTION}
 
 ## 📚 Resources
 - 
+EOM
 
-## 🔗 Related Files
-- [Assets](${BASE_DIR}/assets/${DATE}-day${DAY}-${SAFE_TOPIC}_ASSETS.md)
-- [Concepts](${BASE_DIR}/concepts/${DATE}-day${DAY}-${SAFE_TOPIC}_CONCEPTS.md)
-- [Diagrams](${BASE_DIR}/diagrams/${DATE}-day${DAY}-${SAFE_TOPIC}_DIAGRAMS.md)
-- [Labs](${BASE_DIR}/labs/${DATE}-day${DAY}-${SAFE_TOPIC}_LABS.md)
-- [Templates](${BASE_DIR}/templates/${DATE}-day${DAY}-${SAFE_TOPIC}_TEMPLATES.md)
-MAIN
-
-echo "📘 Created main file: $(basename "$MAIN_FILE")"
+echo "Created: $(basename "$MAIN_FILE")"
 
 # Create AI file if AI task is provided
 if [ -n "$AI_TASK" ]; then
   AI_FILE="$BASE_DIR/daily/${DATE}-day${DAY}-${SAFE_TOPIC}_AI.md"
-  cat > "$AI_FILE" << AI
+  cat > "$AI_FILE" << EOM
 # Day ${DAY}: ${TOPIC} - AI Task
 **Date:** ${DATE}
 
@@ -66,14 +59,6 @@ ${AI_TASK}
 
 ## 🔗 Resources
 - 
-
-## 🔗 Related Files
-- [Main Question](${BASE_DIR}/daily/${DATE}-day${DAY}-${SAFE_TOPIC}.md)
-- [Assets](${BASE_DIR}/assets/${DATE}-day${DAY}-${SAFE_TOPIC}_ASSETS.md)
-- [Concepts](${BASE_DIR}/concepts/${DATE}-day${DAY}-${SAFE_TOPIC}_CONCEPTS.md)
-- [Diagrams](${BASE_DIR}/diagrams/${DATE}-day${DAY}-${SAFE_TOPIC}_DIAGRAMS.md)
-- [Labs](${BASE_DIR}/labs/${DATE}-day${DAY}-${SAFE_TOPIC}_LABS.md)
-- [Templates](${BASE_DIR}/templates/${DATE}-day${DAY}-${SAFE_TOPIC}_TEMPLATES.md)
-AI
-  echo "🤖 Created AI file: $(basename "$AI_FILE")"
+EOM
+  echo "Created AI task file: $(basename "$AI_FILE")"
 fi

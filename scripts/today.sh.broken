@@ -1,0 +1,79 @@
+#!/bin/bash
+set -e
+
+BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+TOPICS_FILE="$BASE_DIR/topics.txt"
+DAY_FILE="$BASE_DIR/day.txt"
+
+# Initialize day counter
+if [ ! -f "$DAY_FILE" ]; then
+  echo "1" > "$DAY_FILE"
+fi
+
+DAY="$(cat "$DAY_FILE")"
+
+# Extract topic, question, and AI task
+ENTRY=$(awk -v day="$DAY" '
+  BEGIN { looking = 0 }
+  
+  # Look for the day pattern
+  $0 ~ "^[[:space:]]*Day[[:space:]]+" day "[[:space:]]*:" {
+    looking = 1
+    topic = $0
+    next
+  }
+  
+  # If we are looking for this day's content
+  looking {
+    # Extract question
+    if ($0 ~ "^[[:space:]]*Question[[:space:]]*:") {
+      gsub(/^[[:space:]]*Question[[:space:]]*:[[:space:]]*/, "", $0)
+      question = $0
+      next
+    }
+    
+    # Extract AI task
+    if ($0 ~ "^[[:space:]]*AI[[:space:]]+Task[[:space:]]*:") {
+      gsub(/^[[:space:]]*AI[[:space:]]+Task[[:space:]]*:[[:space:]]*/, "", $0)
+      ai_task = $0
+      print topic "|" question "|" ai_task
+      exit
+    }
+  }
+' "$TOPICS_FILE")
+
+if [ -z "$ENTRY" ]; then
+  echo "🎉 No more topics found. Course complete."
+  exit 0
+fi
+
+# Clean up the topic (remove "Day X: ")
+TOPIC="$(echo "$ENTRY" | cut -d'|' -f1 | sed 's/^[[:space:]]*Day[[:space:]]*[0-9]*[[:space:]]*:[[:space:]]*//')"
+QUESTION="$(echo "$ENTRY" | cut -d'|' -f2)"
+AI_TASK="$(echo "$ENTRY" | cut -d'|' -f3)"
+
+echo "📅 Day $DAY"
+echo "🎯 Topic   : $TOPIC"
+echo "❓ Question: $QUESTION"
+echo "🤖 AI Task : $AI_TASK"
+echo ""
+
+"$BASE_DIR/scripts/new-daily.sh" "$DAY" "$TOPIC" "$QUESTION" "$AI_TASK"
+
+# Check if new-guides.sh exists before running it
+if [ -f "$BASE_DIR/scripts/new-guides.sh" ]; then
+  "$BASE_DIR/scripts/new-guides.sh" "$DAY" "$TOPIC" "$(date +%Y%m%d)" "$BASE_DIR"
+fi
+
+# Update index
+if [ -f "$BASE_DIR/scripts/update-index.sh" ]; then
+  "$BASE_DIR/scripts/update-index.sh"
+fi
+
+# Git auto-commit
+if [ -f "$BASE_DIR/scripts/git-daily.sh" ]; then
+  "$BASE_DIR/scripts/git-daily.sh" "$DAY" "$TOPIC"
+fi
+
+# Increment day
+echo $((DAY + 1)) > "$DAY_FILE"
