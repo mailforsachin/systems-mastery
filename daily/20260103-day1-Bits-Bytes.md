@@ -16,56 +16,56 @@ User's device = Recipient opening the letter
 *(Add your practical investigation here)*
 
 ## 📚 Resources
-1️⃣ Where does a Python string live in memory?
-“the actual string lives in the heap but the pointer/reference lives in the stack”
-✅ Correct
-Stack holds the reference
-Heap holds the object
+1️⃣ Where does a Python string live in memory?  
+“the actual string lives in the heap but the pointer/reference lives in the stack”  
+✅ Correct  
+Stack holds the reference  
+Heap holds the object  
 
-## Why is result = char + result expensive?
-“On every iteration we are reading the string and prepending it. Per space time complexity it is o(n2)”
-Let me sharpen it to FAANG-grade clarity:
-Python strings are immutable
-text = "hello"
-# Trying to change a character directly will cause an error
-try:
-    text[0] = "H"
-except TypeError as e:
-    print(e)  # Output: 'str' object does not support item assignment
-# Instead, you create a new string
-new_text = "H" + text[1:]
-print(new_text)  # Output: Hello
+## Why is result = char + result expensive?  
+“On every iteration we are reading the string and prepending it. Per space time complexity it is o(n2)”  
+Let me sharpen it to FAANG-grade clarity:  
+Python strings are immutable  
+text = "hello"  
+# Trying to change a character directly will cause an error  
+try:  
+    text[0] = "H"  
+except TypeError as e:  
+    print(e)  # Output: 'str' object does not support item assignment   
+# Instead, you create a new string  
+new_text = "H" + text[1:]  
+print(new_text)  # Output: Hello  
 
-Every concatenation creates a new string
-Each iteration copies existing characters
-Total work = 1 + 2 + 3 + ... + n → O(n²)
+Every concatenation creates a new string  
+Each iteration copies existing characters  
+Total work = 1 + 2 + 3 + ... + n → O(n²)  
 
-The question was:
-##If reversing a string this way is inefficient, what might be a better data structure to use and why?
+The question was:  
+##If reversing a string this way is inefficient, what might be a better data structure to use and why?  
 
-✅ Correct Answer (What Interviewers Expect)
-A list (array) is better.
-Why?
-Lists are mutable
-Elements can be swapped in place
-No new objects need to be created
-Enables O(n) time and O(1) extra space
+✅ Correct Answer (What Interviewers Expect)  
+A list (array) is better.  
+Why?  
+Lists are mutable  
+Elements can be swapped in place  
+No new objects need to be created  
+Enables O(n) time and O(1) extra space   
 
-##EXECUTION
-Convert string → list of characters
-Swap left and right elements
-Convert back if needed
+##EXECUTION  
+Convert string → list of characters  
+Swap left and right elements  
+Convert back if needed  
 
-##Data structure choice
-Mutability
-Time/space optimization
+##Data structure choice  
+Mutability  
+Time/space optimization  
 
-## ❌ Why “maps” (dictionaries) are not suitable
-Maps/dicts:
-Are key–value stores
-Do not preserve order (conceptually)
-Are optimized for lookup, not sequential access
-Reversing requires ordered, index-based access
+## ❌ Why “maps” (dictionaries) are not suitable  
+Maps/dicts:  
+Are key–value stores  
+Do not preserve order (conceptually)  
+Are optimized for lookup, not sequential access  
+Reversing requires ordered, index-based access  
 
 ## 🔗 Related Files
 - [Assets](/home/ubuntu/systems-mastery/assets/20260103-day1-Bits-Bytes_ASSETS.md)
