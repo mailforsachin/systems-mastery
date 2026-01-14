@@ -5,12 +5,12 @@
 How does data physically travel from my VPS to users?
 
 ## 📝 My Answer
-Your VPS = You writing the letter
-NIC = Putting it in an envelope with address
-Switch = Your local post office
-Router = Major sorting hubs
-Fiber cables = Trucks/planes between cities
-User's device = Recipient opening the letter
+Your VPS = You writing the letter  
+NIC = Putting it in an envelope with address  
+Switch = Your local post office  
+Router = Major sorting hubs  
+Fiber cables = Trucks/planes between cities  
+User's device = Recipient opening the letter  
 
 ## 🔧 Practical Investigation
 *(Add your practical investigation here)*
