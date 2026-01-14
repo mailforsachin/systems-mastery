@@ -28,11 +28,12 @@ Let me sharpen it to FAANG-grade clarity:
 Python strings are immutable  
 text = "hello"  
 # Trying to change a character directly will cause an error  
-try:  
-    text[0] = "H"  
-except TypeError as e:  
-    print(e)  # Output: 'str' object does not support item assignment   
-# Instead, you create a new string  
+    try:  
+        text[0] = "H"  
+    except TypeError as e:  
+        print(e)  # Output: 'str' object does not support item assignment   "
+    
+Instead, you create a new string  
 new_text = "H" + text[1:]  
 print(new_text)  # Output: Hello  
 
@@ -41,7 +42,7 @@ Each iteration copies existing characters
 Total work = 1 + 2 + 3 + ... + n → O(n²)  
 
 The question was:  
-##If reversing a string this way is inefficient, what might be a better data structure to use and why?  
+## If reversing a string this way is inefficient, what might be a better data structure to use and why?  
 
 ✅ Correct Answer (What Interviewers Expect)  
 A list (array) is better.  
@@ -51,12 +52,12 @@ Elements can be swapped in place
 No new objects need to be created  
 Enables O(n) time and O(1) extra space   
 
-##EXECUTION  
+## EXECUTION  
 Convert string → list of characters  
 Swap left and right elements  
 Convert back if needed  
 
-##Data structure choice  
+## Data structure choice  
 Mutability  
 Time/space optimization  
 
@@ -66,6 +67,11 @@ Are key–value stores
 Do not preserve order (conceptually)  
 Are optimized for lookup, not sequential access  
 Reversing requires ordered, index-based access  
+
+## Why is a list more suitable than a string for in-place reversal?  
+A list is mutable, meaning its elements can be modified in place, whereas strings are immutable.   
+By using a list, we can swap characters directly without creating new copies of the string on each iteration.  
+This avoids repeated copying and improves performance, resulting in O(n) time complexity with O(1) extra space.  
 
 ## 🔗 Related Files
 - [Assets](/home/ubuntu/systems-mastery/assets/20260103-day1-Bits-Bytes_ASSETS.md)
